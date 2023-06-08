@@ -21,11 +21,6 @@ function renderApp(props: any): void {
   ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {/* {token ? (
-          <RouterProvider router={router} />
-        ) : (
-          <span>This is a sub-app. Please run in HR-OS main app.</span>
-        )} */}
         <RouterProvider router={router} />
       </PersistGate>
     </Provider>,
@@ -58,4 +53,8 @@ renderWithQiankun({
 
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
   renderApp({});
+  // ReactDOM.render(
+  //   <span>This is a sub-app of HR-OS. Please run in the main app.</span>,
+  //   document.querySelector('#root-2'),
+  // );
 }
