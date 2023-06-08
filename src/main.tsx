@@ -11,6 +11,7 @@ import router from './config/routes';
 import { setAuth } from './features/authentication/authSlice';
 import './index.css';
 import store, { persistor } from './store/configureStore';
+import { ConfigProvider } from 'antd';
 
 function renderApp(props: any): void {
   const { container, token } = props;
@@ -21,7 +22,16 @@ function renderApp(props: any): void {
   ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <RouterProvider router={router} />
+        <ConfigProvider
+          theme={{
+            token: {
+              fontFamily:
+                'Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif',
+            },
+          }}
+        >
+          <RouterProvider router={router} />
+        </ConfigProvider>
       </PersistGate>
     </Provider>,
     container
