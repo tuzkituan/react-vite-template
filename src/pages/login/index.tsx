@@ -1,24 +1,28 @@
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../config/hooks';
-import { loginAsync, selectCurrentUser } from '../../features/userSlice';
-import { Navigate } from 'react-router-dom';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
+import { useEffect } from 'react';
+import { useLoginMutation } from '../../services/api/auth';
+import { isResponseError } from '../../services/helpers';
+import { ILoginRequest } from '../../services/models/authentication/ILoginRequest';
+import useAuth from '../../utils/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const currentUser = useAppSelector(selectCurrentUser);
-  const [show, setShow] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const dispatch = useAppDispatch();
+  const [login, { isLoading }] = useLoginMutation();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
-  const onLogin = async (values: any) => {
-    setLoading(true);
-    await dispatch(
-      loginAsync({
-        email: values.email,
-        password: values.password,
-      }),
-    );
-    setLoading(false);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = async (credentials: ILoginRequest) => {
+    const response = await login(credentials);
+    if (isResponseError(response))
+      notification.error({
+        message: response.error.message,
+      });
   };
 
   return (
@@ -36,8 +40,7 @@ function Login() {
         }}
       >
         <h1>LOGIN</h1>
-        {currentUser && <Navigate to="/" />}
-        <Form onFinish={onLogin}>
+        <Form onFinish={handleLogin}>
           <Form.Item name="email">
             <Input size="large" placeholder="Email" />
           </Form.Item>
@@ -52,7 +55,7 @@ function Login() {
                 width: '100%',
               }}
               type="primary"
-              loading={loading}
+              loading={isLoading}
             >
               LOGIN
             </Button>

@@ -7,20 +7,22 @@ import {
   renderWithQiankun,
 } from 'vite-plugin-qiankun/dist/helper';
 import router from './config/routes';
-import { store } from './config/store';
-import { setToken } from './utils/token';
 import './index.css';
+import { PersistGate } from 'redux-persist/integration/react';
+import store, { persistor } from './store/configureStore';
 
 function renderApp(props: any): void {
   const { container, token } = props;
   if (token) {
-    setToken(token);
+    localStorage.setItem('token_sub_app', token);
     localStorage.setItem('is_sub_app', 'true');
   }
 
   ReactDOM.render(
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
     </Provider>,
     container
       ? container.querySelector('#root-2')

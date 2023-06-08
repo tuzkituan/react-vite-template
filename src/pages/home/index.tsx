@@ -1,13 +1,17 @@
-import { Tabs } from 'antd';
+import { Button, Tabs } from 'antd';
 import reactLogo from '../../assets/react.svg';
-import { useAppSelector } from '../../config/hooks';
-import { selectCurrentUser } from '../../features/userSlice';
 import './index.scss';
 import viteLogo from '/vite.svg';
+import { useAppDispatch, useAppSelector } from '../../store/configureStore';
+import { logout } from '../../features/authentication/authSlice';
 
 function Home() {
-  const currentUser = useAppSelector(selectCurrentUser);
-  // console.log('🚀  ~ currentUser:', currentUser);
+  const currentUser: any = useAppSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   const _renderHome = () => {
     return (
@@ -23,8 +27,12 @@ function Home() {
 
         <div>
           <h1>HR-OS SKELETON</h1>
-
-          {currentUser ? <h2>Hello, {currentUser?.legalName}</h2> : null}
+          {currentUser ? (
+            <>
+              <h2>Hello, {currentUser?.legalName}</h2>
+              <Button onClick={handleLogout}>Logout</Button>
+            </>
+          ) : null}
           <p>Built by HR-OS Team</p>
         </div>
       </div>
