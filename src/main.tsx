@@ -1,26 +1,31 @@
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 import {
   QiankunProps,
   qiankunWindow,
   renderWithQiankun,
 } from 'vite-plugin-qiankun/dist/helper';
 import router from './config/routes';
+import { setAuth } from './features/authentication/authSlice';
 import './index.css';
-import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './store/configureStore';
 
 function renderApp(props: any): void {
   const { container, token } = props;
   if (token) {
-    localStorage.setItem('token_sub_app', token);
-    localStorage.setItem('is_sub_app', 'true');
+    store.dispatch(setAuth({ token, expiresIn: 0, user: null }));
   }
 
   ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        {/* {token ? (
+          <RouterProvider router={router} />
+        ) : (
+          <span>This is a sub-app. Please run in HR-OS main app.</span>
+        )} */}
         <RouterProvider router={router} />
       </PersistGate>
     </Provider>,

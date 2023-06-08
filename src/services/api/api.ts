@@ -7,11 +7,12 @@ import type {
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { isApiError, isFetchBaseQueryError } from '../helpers';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '@/store/rootReducer';
+import { PROXY } from '@/config/proxy';
 
 // Define a service using a base URL and expected endpoints
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://stghrms.paxanimi.ai/api/',
+  baseUrl: PROXY.BASE_API,
   prepareHeaders: (headers, { getState }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
     const { token } = (getState() as RootState).auth;

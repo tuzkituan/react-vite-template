@@ -1,9 +1,9 @@
+import { logout } from '@/features/authentication/authSlice';
+import { useAppDispatch, useAppSelector } from '@/store/configureStore';
+import reactLogo from '@assets/react.svg';
 import { Button, Tabs } from 'antd';
-import reactLogo from '../../assets/react.svg';
 import './index.scss';
 import viteLogo from '/vite.svg';
-import { useAppDispatch, useAppSelector } from '../../store/configureStore';
-import { logout } from '../../features/authentication/authSlice';
 
 function Home() {
   const currentUser: any = useAppSelector((state) => state.auth.user);
@@ -30,7 +30,9 @@ function Home() {
           {currentUser ? (
             <>
               <h2>Hello, {currentUser?.legalName}</h2>
-              <Button onClick={handleLogout}>Logout</Button>
+              <Button onClick={handleLogout} type="primary" danger>
+                Logout
+              </Button>
             </>
           ) : null}
           <p>Built by HR-OS Team</p>

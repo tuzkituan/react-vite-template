@@ -1,17 +1,14 @@
 // authSlice.ts
+import { authApi } from '@/services/api/auth';
+import type { IAuthResponse } from '@/services/models/authentication/IAuthResponse';
+import type { IUser } from '@/services/models/authentication/IUser';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-
-import { authApi } from '../../services/api/auth';
-import type { IAuthResponse } from '../../services/models/authentication/IAuthResponse';
-import type { IUser } from '../../services/models/authentication/IUser';
 
 interface AuthState {
   token: string | null;
   user: IUser | null;
 }
-
-export const FETCH_USER_REQUEST = 'user/fetchUserRequest';
 
 const initialState: AuthState = {
   token: null,
@@ -32,13 +29,17 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      authApi.endpoints.login.matchFulfilled,
-      (state, action) => {
+    builder
+      .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
         state.token = action.payload.token;
         state.user = action.payload.user;
-      },
-    );
+      })
+      .addMatcher(
+        authApi.endpoints.getCurrentUser.matchFulfilled,
+        (state, action) => {
+          state.user = action.payload;
+        },
+      );
   },
 });
 

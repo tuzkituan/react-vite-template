@@ -1,19 +1,26 @@
+import { useGetCurrentUserMutation } from '@/services/api/auth';
+import { useAppSelector } from '@/store/configureStore';
 import * as React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useGetCurrentUserQuery } from '../services/api/auth';
-import { useAppSelector } from '../store/configureStore';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const PrivateRoute = ({ children }: Props) => {
-  const { data: currentUser } = useGetCurrentUserQuery();
+  const [getMe, { isLoading }] = useGetCurrentUserMutation();
+
   const { token } = useAppSelector((state) => state.auth);
+
+  React.useEffect(() => {
+    if (token) {
+      getMe();
+    }
+  }, [token]);
+
   if (!token) {
     return <Navigate to="/login" />;
   }
-
   return <div>{children}</div>;
 };
 

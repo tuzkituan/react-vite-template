@@ -1,9 +1,9 @@
+import { useLoginMutation } from '@/services/api/auth';
+import { isResponseError } from '@/services/helpers';
+import { ILoginRequest } from '@/services/models/authentication/ILoginRequest';
+import useAuth from '@/utils/hooks/useAuth';
 import { Button, Form, Input, notification } from 'antd';
 import { useEffect } from 'react';
-import { useLoginMutation } from '../../services/api/auth';
-import { isResponseError } from '../../services/helpers';
-import { ILoginRequest } from '../../services/models/authentication/ILoginRequest';
-import useAuth from '../../utils/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -61,6 +61,7 @@ function Login() {
             </Button>
           </Form.Item>
         </Form>
+        <p>Built by HR-OS Team</p>
       </div>
     </div>
   );

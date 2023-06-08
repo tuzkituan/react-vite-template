@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../store/configureStore';
+import { useAppSelector } from '@/store/configureStore';
 
 const useAuth = () => {
   const { token } = useAppSelector((state) => state.auth);
