@@ -2,7 +2,7 @@ import { logout } from '@/features/authentication/authSlice';
 import { useAppDispatch, useAppSelector } from '@/store/configureStore';
 import reactLogo from '@assets/react.svg';
 import { Button, Tabs } from 'antd';
-import './index.scss';
+import './index.less';
 import viteLogo from '/vite.svg';
 
 function Home() {

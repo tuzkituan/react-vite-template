@@ -24,9 +24,11 @@ function renderApp(props: any): void {
       <PersistGate loading={null} persistor={persistor}>
         <ConfigProvider
           theme={{
+            hashed: false,
             token: {
               fontFamily:
                 'Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif',
+              colorPrimary: '#2d6cf9',
             },
           }}
         >
