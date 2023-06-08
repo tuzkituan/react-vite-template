@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import qiankun from 'vite-plugin-qiankun';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 const useDevMode = true;
 
 // https://vitejs.dev/config/
