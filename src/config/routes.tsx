@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper';
 import ErrorPage from '../error-page';
-import MainLayout from '../layout/MainLayout';
+import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/home';
 import Login from '../pages/login';
 import PrivateRoute from '../components/PrivateRoute';
